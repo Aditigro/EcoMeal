@@ -18,13 +18,11 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Business View</h1>
-        <p> Id: {{ business.id }}</p>
-        <p> Name: {{ business.name }}</p>
-        <p> Address: {{ business.city }}, {{ business.street }} {{ business.houseNumber }}</p>
-        <p> Phone: {{ business.phoneNumber }}</p>
-        <p> Type: {{ business.businessType.name }}</p>
+        <h1>Business Type View</h1>
+        <p> Id: {{ businessType.id }}</p>
+        <p> Name: {{ businessType.name }}</p>
         <br>
-        <a href="{{ path("app_business") }}"> Back </a>
+        <a href="{{ path('app_business_type') }}">Back</a>
     </div>
+
 {% endblock %}
