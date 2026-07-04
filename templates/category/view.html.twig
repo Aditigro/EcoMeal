@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BusinessController!{% endblock %}
+{% block title %}Hello CategoryController!{% endblock %}
 
 {% block body %}
     <style>
@@ -18,15 +18,10 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Create a new Consumer</h1>
-        {{ form_start(form) }}
-            {{ form_row(form.firstName) }}
-            {{ form_row(form.lastName) }}
-            {{ form_row(form.phoneNumber) }}
-            {{ form_row(form.submit) }}
-        {{ form_end(form) }}
+        <h1>Category View</h1>
+        <p>Id: {{ category.id }}</p>
+        <p>Name: {{ category.name }}</p>
         <br>
-        <a href="{{ path('app_consumer') }}">Back</a>
-
+        <a href="{{ path('app_category') }}">Back</a>
     </div>
 {% endblock %}
