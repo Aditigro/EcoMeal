@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PackageController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>Package View</h1>
+        <p> Id: {{ package.id }}</p>
+        <p> Name: {{ package.name }}</p>
+        <p> Description: {{ package.description }}</p>
+        <p> Price: {{ package.price }}</p>
+        {% if package.photo %}
+            <img src="{{ package.photo }}" alt="A photo of the package">
+        {% else %}
+            <p> This package has no photo </p>
+        {% endif %}
+        <p> Created: {{ package.createdAt|date('Y-m-d H:i:s') }}</p>
+        <p> From: {{ package.business.name }}</p>
+        <p> Category: {{ package.category.name }}</p>
+        <br>
+        <a href="{{ path("app_package") }}"> Back </a>
+    </div>
+{% endblock %}
