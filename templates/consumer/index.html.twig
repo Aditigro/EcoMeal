@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BusinessTypeController!{% endblock %}
+{% block title %}Hello ConsumerController!{% endblock %}
 
 {% block body %}
     <style>
@@ -18,28 +18,35 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Business Type Table</h1>
-        <a href="{{ path('app_business_type_new') }}"> Create New BusinessType</a>
+        <h1>Consumer Table</h1>
+        <a href="{{ path('app_consumer_new') }}"> Create New Consumer</a>
         <br>
         <table>
             <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone Number</th>
             </tr>
             </thead>
             <tbody>
-            {% for businessType in businessTypes %}
+            {% for consumer in consumers %}
                 <tr>
                     <td>
-                        <a href="{{ path("app_business_type_view", {
-                               "id": businessType.id}) }}">
-                            {{ businessType.id }}
+                        <a href="{{ path("app_consumer_view", {
+                            "id": consumer.id}) }}">
+                            {{ consumer.id }}
                         </a>
-
                     </td>
                     <td>
-                        {{ businessType.name }}
+                        {{ consumer.firstName }}
+                    </td>
+                    <td>
+                        {{ consumer.lastName }}
+                    </td>
+                    <td>
+                        {{ consumer.phoneNumber }}
                     </td>
                 </tr>
             {% endfor %}

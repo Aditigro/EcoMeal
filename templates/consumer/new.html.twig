@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BusinessTypeController!{% endblock %}
+{% block title %}Hello BusinessController!{% endblock %}
 
 {% block body %}
     <style>
@@ -18,9 +18,11 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Create a new Business Type</h1>
+        <h1>Create a new Consumer</h1>
         {{ form_start(form) }}
-            {{ form_row(form.name) }}
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.lastName) }}
+            {{ form_row(form.phoneNumber) }}
             {{ form_row(form.submit) }}
         {{ form_end(form) }}
 

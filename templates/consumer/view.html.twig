@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BusinessTypeController!{% endblock %}
+{% block title %}Hello BusinessController!{% endblock %}
 
 {% block body %}
     <style>
@@ -18,12 +18,12 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Create a new Business Type</h1>
-        {{ form_start(form) }}
-            {{ form_row(form.name) }}
-            {{ form_row(form.submit) }}
-        {{ form_end(form) }}
-
-
+        <h1>Consumer View</h1>
+        <p> Id: {{ consumer.id }}</p>
+        <p> First Name: {{ consumer.firstName }}</p>
+        <p> Last Name: {{ consumer.lastName }}</p>
+        <p> Phone: {{ consumer.phoneNumber }}</p>
+        <br>
+        <a href="{{ path("app_consumer") }}"> Back </a>
     </div>
 {% endblock %}
