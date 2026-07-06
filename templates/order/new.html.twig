@@ -18,19 +18,15 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Create a new Package for {{ business.name }}</h1>
+        <h1>Create a new Order for {{ consumer.firstName }} {{ consumer.lastName }}</h1>
         {{ form_start(form) }}
-            {{ form_row(form.name) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.price) }}
-            {{ form_row(form.photo) }}
             {{ form_row(form.createdAt) }}
-            {{ form_row(form.category) }}
+            {{ form_row(form.package) }}
             {{ form_row(form.submit) }}
         {{ form_end(form) }}
         <br>
-        <a href="{{ path('app_business_view', {
-            "id": business.id
+        <a href="{{ path('app_consumer_view', {
+            "id": consumer.id
         }) }}">Back</a>
 
     </div>

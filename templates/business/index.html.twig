@@ -24,6 +24,7 @@
         <table>
             <thead>
             <tr>
+                <th>Actions</th>
                 <th>Id</th>
                 <th>Name</th>
                 <th>City</th>
@@ -37,10 +38,24 @@
             {% for business in businesses %}
                 <tr>
                     <td>
-                        <a href="{{ path("app_business_view", {
-                            "id": business.id}) }}">
-                            {{ business.id }}
-                        </a>
+                        <p><a href="{{ path("app_business_view", {
+                                "id": business.id}) }}">
+                                View
+                            </a></p>
+                        <p><a href="{{ path("app_business_update", {
+                                "id": business.id}) }}">
+                                Update
+                            </a></p>
+                        <p>
+                        <form action="{{ path('app_business_delete',{
+                            "id": business.id}
+                        ) }}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                        </p>
+                    </td>
+                    <td>
+                        {{ business.id }}
                     </td>
                     <td>
                         {{ business.name }}

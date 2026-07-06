@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BusinessController!{% endblock %}
+{% block title %}Hello OrderController!{% endblock %}
 
 {% block body %}
     <style>
@@ -18,23 +18,19 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Consumer View</h1>
-        <p> Id: {{ consumer.id }}</p>
-        <p> First Name: {{ consumer.firstName }}</p>
-        <p> Last Name: {{ consumer.lastName }}</p>
-        <p> Phone: {{ consumer.phoneNumber }}</p>
+        <h1>Order Table</h1>
         <br>
-        <h2>Orders:</h2>
         <table>
             <thead>
             <tr>
                 <th>Id</th>
                 <th>Created At</th>
                 <th>Package</th>
+                <th>Consumer</th>
             </tr>
             </thead>
             <tbody>
-            {% for order in consumer.orders %}
+            {% for order in orders %}
                 <tr>
                     <td>
                         <a href="{{ path("app_order_view", {
@@ -48,20 +44,12 @@
                     <td>
                         {{ order.package.name }}
                     </td>
+                    <td>
+                        {{ order.consumer.firstName }} {{ order.consumer.lastName }}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        <br>
-        <p>
-            <a href="{{ path("app_order_new", {
-                "id": consumer.id
-            }) }}">
-                Create a new order for {{ consumer.firstName}} {{ consumer.lastName}}
-            </a>
-        </p>
-        <p>
-            <a href="{{ path("app_consumer") }}"> Back </a>
-        </p>
     </div>
 {% endblock %}

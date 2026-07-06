@@ -48,12 +48,13 @@ final class PackageController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_business_view', [
-                'id' => $package->getBusiness()->getId(),
+                'id' => $business->getId(),
             ]);
         }
 
         return $this->render('package/new.html.twig',[
             'form' => $form,
+            'business' => $business,
         ]);
     }
 }
