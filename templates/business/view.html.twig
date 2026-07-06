@@ -25,6 +25,67 @@
         <p> Phone: {{ business.phoneNumber }}</p>
         <p> Type: {{ business.businessType.name }}</p>
         <br>
-        <a href="{{ path("app_business") }}"> Back </a>
+        <h2>Packages: </h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Photo</th>
+                <th>Created At</th>
+                <th>Category</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for package in business.packages %}
+                <tr>
+                    <td>
+                        <a href="{{ path("app_package_view", {
+                            "id": package.id}) }}">
+                            {{ package.id }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ package.name }}
+                    </td>
+                    <td>
+                        {{ package.description }}
+                    </td>
+                    <td>
+                        {{ package.price }}
+                    </td>
+                    <td>
+                        {% if package.photo %}
+                            {{ package.photo }}
+                        {% else %}
+                            No photo
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ package.createdAt|date('Y-m-d H:i:s') }}
+                    </td>
+                    <td>
+                        {{ package.category.name }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <p>
+            <a href="{{ path("app_package_new", {
+                "id" : business.id
+            }) }}">
+                Create a new package for {{ business.name }}
+            </a>
+        </p>
+        <p><a href="{{ path("app_business_update", {
+                "id": business.id}) }}">
+                Update
+            </a></p>
+        <p><a href="{{ path("app_business") }}"> Back </a></p>
+
     </div>
 {% endblock %}

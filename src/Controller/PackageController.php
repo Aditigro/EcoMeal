@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Business;
 use App\Entity\Package;
 use App\Form\PackageFormType;
 use App\Repository\PackageRepository;
@@ -23,25 +24,32 @@ final class PackageController extends AbstractController
         ]);
     }
     #[Route('/package/{id}', name: 'app_package_view')]
-    public function view(Package $package) : Response{
+    public function view(Package $package) : Response
+    {
 
         return $this->render('package/view.html.twig', [
             'package' => $package,
         ]);
     }
+    #[Route('/business/{id}/create_package', name: 'app_package_new', methods: ['GET', 'POST'])]
+    public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $business = $entityManager->getRepository(Business::class)->find($id);
 
-    #[Route('/new/package', name: 'app_package_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response{
         $package = new Package();
 
         $form = $this->createForm(PackageFormType::class, $package);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $package->setBusiness($business);
+
             $entityManager->persist($package);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_package');
+            return $this->redirectToRoute('app_business_view', [
+                'id' => $package->getBusiness()->getId(),
+            ]);
         }
 
         return $this->render('package/new.html.twig',[
