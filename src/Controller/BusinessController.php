@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class BusinessController extends AbstractController
 {
-    #[Route('/business', name: 'app_business')]
+    #[Route('/business', name: 'app_business', methods: ['GET'])]
     public function index(BusinessRepository $businessRepository): Response
     {
         $businesses = $businessRepository->findAll();
@@ -69,8 +69,8 @@ final class BusinessController extends AbstractController
         ]);
     }
 
-    #[Route('/business/{id}', name: 'app_business_delete', methods: ['POST'])]
-    public function delete(Request $request, Business $business, EntityManagerInterface $entityManager) : Response
+    #[Route('/delete/business/{id}', name: 'app_business_delete', methods: ['POST'])]
+    public function delete(Business $business, EntityManagerInterface $entityManager) : Response
     {
         $entityManager->remove($business);
         $entityManager->flush();

@@ -37,10 +37,7 @@
             {% for order in consumer.orders %}
                 <tr>
                     <td>
-                        <a href="{{ path("app_order_view", {
-                            "id": order.id}) }}">
-                            {{ order.id }}
-                        </a>
+                        {{ order.id }}
                     </td>
                     <td>
                         {{ order.createdAt|date('Y-m-d H:i:s') }}
@@ -58,6 +55,12 @@
                 "id": consumer.id
             }) }}">
                 Create a new order for {{ consumer.firstName}} {{ consumer.lastName}}
+            </a>
+        </p>
+        <p>
+            <a href="{{ path("app_consumer_update", {
+                "id": consumer.id}) }}">
+                Update
             </a>
         </p>
         <p>

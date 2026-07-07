@@ -59,4 +59,31 @@ class OrderController extends AbstractController
             'consumer' => $consumer,
             ]);
     }
+
+    #[Route('/order/{id}/update', name: 'app_order_update', methods: ['GET', 'POST'])]
+    public function update(Order $order, Request $request, EntityManagerInterface $entityManager) : Response
+    {
+        $form = $this->createForm(OrderFormType::class, $order);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+                        $entityManager->flush();
+
+            return $this->redirectToRoute('app_order');
+        }
+
+        return $this->render('order/update.html.twig',[
+            'form' => $form,
+            'order' => $order,
+        ]);
+    }
+
+    #[Route('/delete/order/{id}', name: "app_order_delete", methods: ['POST'])]
+    public function delete(Order $order, EntityManagerInterface $entityManager) : Response
+    {
+        $entityManager->remove($order);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_order');
+    }
 }

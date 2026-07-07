@@ -23,6 +23,7 @@
         <table>
             <thead>
             <tr>
+                <th>Actions</th>
                 <th>Id</th>
                 <th>Created At</th>
                 <th>Package</th>
@@ -33,10 +34,23 @@
             {% for order in orders %}
                 <tr>
                     <td>
-                        <a href="{{ path("app_order_view", {
-                            "id": order.id}) }}">
-                            {{ order.id }}
-                        </a>
+                        <p><a href="{{ path("app_order_view", {
+                                "id": order.id}) }}">
+                                View
+                            </a></p>
+                        <p><a href="{{ path("app_order_update", {
+                                "id": order.id}) }}">
+                                Update
+                            </a></p>
+                        <p>
+                        <form action="{{ path('app_order_delete',{
+                            "id": order.id}
+                        ) }}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    <td>
+                        {{ order.id }}
                     </td>
                     <td>
                         {{ order.createdAt|date('Y-m-d H:i:s') }}

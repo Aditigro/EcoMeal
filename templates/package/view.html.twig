@@ -32,6 +32,15 @@
         <p> From: {{ package.business.name }}</p>
         <p> Category: {{ package.category.name }}</p>
         <br>
-        <a href="{{ path("app_package") }}"> Back </a>
+        <p>
+            <a href="{{ path("app_package_update", {
+                "id" : package.id,
+            }) }}">
+                Update
+            </a>
+        </p>
+        <p>
+            <a href="{{ path("app_package") }}"> Back </a>
+        </p>
     </div>
 {% endblock %}

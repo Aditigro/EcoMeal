@@ -24,6 +24,7 @@
         <table>
             <thead>
             <tr>
+                <th>Actions</th>
                 <th>Id</th>
                 <th>Name</th>
             </tr>
@@ -32,11 +33,23 @@
             {% for category in categories %}
                 <tr>
                     <td>
-                        <a href="{{ path("app_category_view", {
-                               "id": category.id}) }}">
-                            {{ category.id }}
-                        </a>
-
+                        <p><a href="{{ path("app_category_view", {
+                                "id": category.id}) }}">
+                                View
+                            </a></p>
+                        <p><a href="{{ path("app_category_update", {
+                                "id": category.id}) }}">
+                                Update
+                            </a></p>
+                        <p>
+                        <form action="{{ path('app_category_delete',{
+                            "id": category.id}
+                        ) }}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    <td>
+                        {{ category.id }}
                     </td>
                     <td>
                         {{ category.name }}

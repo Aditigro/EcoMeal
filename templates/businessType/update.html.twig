@@ -18,19 +18,15 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Business Type View</h1>
-        <p> Id: {{ businessType.id }}</p>
-        <p> Name: {{ businessType.name }}</p>
+        <h1>Update {{ business_type.name }}</h1>
+        {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.submit) }}
+        {{ form_end(form) }}
         <br>
-        <p>
-            <a href="{{ path("app_business_type_update", {
-                "id": businessType.id}) }}">
-                Update
-            </a>
-        </p>
         <p>
             <a href="{{ path('app_business_type') }}">Back</a>
         </p>
-    </div>
 
+    </div>
 {% endblock %}

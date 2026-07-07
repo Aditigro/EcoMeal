@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategoryController!{% endblock %}
+{% block title %}Hello OrderController!{% endblock %}
 
 {% block body %}
     <style>
@@ -18,18 +18,13 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Category View</h1>
-        <p>Id: {{ category.id }}</p>
-        <p>Name: {{ category.name }}</p>
+        <h1>Update order {{ order.id }}/{{ order.createdAt|date('Y-m-d H:i:s') }}</h1>
+        {{ form_start(form) }}
+            {{ form_row(form.package) }}
+            {{ form_row(form.submit) }}
+        {{ form_end(form) }}
         <br>
-        <p>
-            <a href="{{ path("app_category_update", {
-                "id": category.id}) }}">
-                Update
-            </a>
-        </p>
-        <p>
-            <a href="{{ path('app_category') }}">Back</a>
-        </p>
+        <a href="{{ path('app_order') }}">Back</a>
+
     </div>
 {% endblock %}

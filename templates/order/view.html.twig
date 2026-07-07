@@ -24,6 +24,15 @@
         <p> Package: {{ order.package.name }}</p>
         <p> Consumer: {{ order.consumer.firstName }} {{ order.consumer.lastName }}</p>
         <br>
-        <a href="{{ path("app_order") }}"> Back </a>
+        <p>
+            <a href="{{ path("app_order_update", {
+                "id" : order.id,
+            }) }}">
+                Update
+            </a>
+        </p>
+        <p>
+            <a href="{{ path("app_order") }}"> Back </a>
+        </p>
     </div>
 {% endblock %}

@@ -23,6 +23,7 @@
         <table>
             <thead>
             <tr>
+                <th>Actions</th>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
@@ -37,10 +38,23 @@
             {% for package in packages %}
                 <tr>
                     <td>
-                        <a href="{{ path("app_package_view", {
-                            "id": package.id}) }}">
-                            {{ package.id }}
-                        </a>
+                        <p><a href="{{ path("app_package_view", {
+                                "id": package.id}) }}">
+                                View
+                            </a></p>
+                        <p><a href="{{ path("app_package_update", {
+                                "id": package.id}) }}">
+                                Update
+                            </a></p>
+                        <p>
+                        <form action="{{ path('app_package_delete',{
+                            "id": package.id}
+                        ) }}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    <td>
+                        {{ package.id }}
                     </td>
                     <td>
                         {{ package.name }}

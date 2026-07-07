@@ -25,7 +25,7 @@ class BusinessTypeController extends AbstractController
         ]);
     }
 
-    #[Route('/business_type/{id}', 'app_business_type_view')]
+    #[Route('/business_type/{id}', 'app_business_type_view', methods: ['GET'])]
     public function view(int $id, BusinessTypeRepository $repository): Response{
 
         $businessType = $repository->find($id);
@@ -53,4 +53,32 @@ class BusinessTypeController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/business_type/{id}/update', name: 'app_business_type_update', methods: ['GET', 'POST'])]
+    public function update(Request $request, EntityManagerInterface$entityManager, BusinessType $businessType) : Response
+    {
+        $form = $this->createForm(BusinessTypeFormType::class, $businessType);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_business_type');
+        }
+
+        return $this->render('businessType/update.html.twig',[
+            'form' => $form,
+            'business_type' => $businessType,
+        ]);
+    }
+
+    #[Route('/delete/business_type/{id}', name: 'app_business_type_delete', methods: ['POST'])]
+    public function delete(BusinessType $businessType, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($businessType);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_business_type');
+    }
+
 }

@@ -52,4 +52,31 @@ class ConsumerController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/consumer/{id}/update', name: 'app_consumer_update', methods: ['GET', 'POST'])]
+    public function update(Consumer $consumer,Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ConsumerFormType::class, $consumer);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_consumer');
+        }
+
+        return $this->render('consumer/update.html.twig',[
+            'form' => $form,
+            'consumer' => $consumer,
+        ]);
+    }
+
+    #[Route('/delete/consumer/{id}', name: 'app_consumer_delete', methods: ['POST'])]
+    public function delete(Consumer $consumer, EntityManagerInterface $entityManager) : Response
+    {
+        $entityManager->remove($consumer);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_consumer');
+    }
 }

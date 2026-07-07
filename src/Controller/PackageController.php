@@ -59,4 +59,31 @@ final class PackageController extends AbstractController
             'business' => $business,
         ]);
     }
+
+    #[Route('/package/{id}/update', name: 'app_package_update', methods: ['GET', 'POST'])]
+    public function update(Package $package, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(PackageFormType::class, $package);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_package');
+        }
+
+        return $this->render('package/update.html.twig',[
+            'form' => $form,
+            'package' => $package,
+        ]);
+    }
+
+    #[Route('/delete/package/{id}', name: "app_package_delete", methods: ['POST'])]
+    public function delete(Package $package, EntityManagerInterface $entityManager) : Response
+    {
+        $entityManager->remove($package);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_package');
+    }
 }
