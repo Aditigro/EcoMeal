@@ -42,7 +42,10 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $now = new \DateTimeImmutable();
+            $order->setCreatedAt($now);
             $order->setConsumer($consumer);
+
             $entityManager->persist($order);
             $entityManager->flush();
 

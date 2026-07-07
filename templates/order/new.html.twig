@@ -20,7 +20,6 @@
     <div class="example-wrapper">
         <h1>Create a new Order for {{ consumer.firstName }} {{ consumer.lastName }}</h1>
         {{ form_start(form) }}
-            {{ form_row(form.createdAt) }}
             {{ form_row(form.package) }}
             {{ form_row(form.submit) }}
         {{ form_end(form) }}

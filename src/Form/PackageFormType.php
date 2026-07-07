@@ -26,7 +26,6 @@ class PackageFormType extends AbstractType
             ->add('photo', TextType::class, [
                 'required' => false,
             ])
-            ->add('createdAt', DateTimeType::class)
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name'

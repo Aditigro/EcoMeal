@@ -42,6 +42,8 @@ final class PackageController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $now = new \DateTimeImmutable();
+            $package->setCreatedAt($now);
             $package->setBusiness($business);
 
             $entityManager->persist($package);

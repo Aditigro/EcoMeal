@@ -24,7 +24,6 @@ class OrderFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
         $builder
-            ->add('createdAt', DateTimeType::class)
             ->add('package', EntityType::class, [
                 'class' => Package::class,
                 'choice_label' => 'name',
