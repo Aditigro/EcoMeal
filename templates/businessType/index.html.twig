@@ -18,50 +18,50 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Business Type Table</h1>
-        <a href="{{ path('app_business_type_new') }}"> Create New BusinessType</a>
+        <h1 class="text-center">Business Type</h1>
+        <a class="btn btn-primary position-absolute start-50 translate-middle-x" href="{{ path('app_business_type_new') }}"> Create New BusinessType</a>
         <br>
-        <table>
-            <thead>
-            <tr>
-                <th>Actions</th>
-                <th>Id</th>
-                <th>Name</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for businessType in businessTypes %}
-                <tr>
-                    <td>
-                        <p>
-                            <a href="{{ path("app_business_type_view", {
-                                "id": businessType.id}) }}">
-                                View
-                            </a>
-                        </p>
-                        <p>
-                            <a href="{{ path("app_business_type_update", {
-                                "id": businessType.id}) }}">
-                                Update
-                            </a>
-                        </p>
-                        <p>
+        <br>
+        <div class="d-flex justify-content-center">
+            <table class="table table-striped">
+                <thead>
+                <tr class="table-primary">
+                    <th class="text-center px-3 col-auto">Actions</th>
+                    <th class="text-center px-3">Id</th>
+                    <th class="text-center px-3">Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for businessType in businessTypes %}
+                    <tr class="table-secondary">
+                        <td class="align-middle text-center" >
                             <form action="{{ path('app_business_type_delete',{
                                 "id": businessType.id}
                             ) }}" method="post">
-                                <button type="submit">Delete</button>
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" href="{{ path("app_business_type_update", {
+                                        "id": businessType.id}) }}">
+                                        Update
+                                    </a>
+                                    <a class="btn btn-secondary" href="{{ path("app_business_type_view", {
+                                        "id": businessType.id}) }}">
+                                        View
+                                    </a>
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </div>
                             </form>
-                        </p>
-                    </td>
-                    <td>
-                        {{ businessType.id }}
-                    </td>
-                    <td>
-                        {{ businessType.name }}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ businessType.id }}
+                        </td>
+                        <td class="text-center px-3 align-middle text-nowrap">
+                            {{ businessType.name }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
     </div>
 {% endblock %}

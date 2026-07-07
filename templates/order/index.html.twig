@@ -18,52 +18,56 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Order Table</h1>
+        <h1 class="text-center">Order</h1>
         <br>
-        <table>
-            <thead>
-            <tr>
-                <th>Actions</th>
-                <th>Id</th>
-                <th>Created At</th>
-                <th>Package</th>
-                <th>Consumer</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for order in orders %}
-                <tr>
-                    <td>
-                        <p><a href="{{ path("app_order_view", {
-                                "id": order.id}) }}">
-                                View
-                            </a></p>
-                        <p><a href="{{ path("app_order_update", {
-                                "id": order.id}) }}">
-                                Update
-                            </a></p>
-                        <p>
-                        <form action="{{ path('app_order_delete',{
-                            "id": order.id}
-                        ) }}" method="post">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                    <td>
-                        {{ order.id }}
-                    </td>
-                    <td>
-                        {{ order.createdAt|date('Y-m-d H:i:s') }}
-                    </td>
-                    <td>
-                        {{ order.package.name }}
-                    </td>
-                    <td>
-                        {{ order.consumer.firstName }} {{ order.consumer.lastName }}
-                    </td>
+        <br>
+        <div class="d-flex justify-content-center">
+            <table class="table table-striped">
+                <thead>
+                <tr class="table-primary">
+                    <th class="text-center px-3">Actions</th>
+                    <th class="text-center px-3">Id</th>
+                    <th class="text-center px-3 text-nowrap">Created At</th>
+                    <th class="text-center px-3">Package</th>
+                    <th class="text-center px-3">Consumer</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr class="table-secondary">
+                        <td class="align-middle px-3">
+                            <form action="{{ path('app_order_delete',{
+                                "id": order.id}
+                            ) }}" method="post">
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" href="{{ path("app_order_update", {
+                                        "id": order.id}) }}">
+                                        Update
+                                    </a>
+                                    <a class="btn btn-secondary" href="{{ path("app_order_view", {
+                                        "id": order.id}) }}">
+                                        View
+                                    </a>
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ order.id }}
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ order.createdAt|date('Y-m-d H:i:s') }}
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ order.package.name }}
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ order.consumer.firstName }} {{ order.consumer.lastName }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

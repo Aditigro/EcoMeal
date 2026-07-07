@@ -18,66 +18,70 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Business Table</h1>
-        <a href="{{ path('app_business_new') }}"> Create New Business</a>
+        <h1 class="text-center">Business</h1>
+        <a class="btn btn-primary position-absolute start-50 translate-middle-x" href="{{ path('app_business_new') }}"> Create New Business</a>
         <br>
-        <table>
-            <thead>
-            <tr>
-                <th>Actions</th>
-                <th>Id</th>
-                <th>Name</th>
-                <th>City</th>
-                <th>Street</th>
-                <th>House Number</th>
-                <th>Phone Number</th>
-                <th>Business Type</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for business in businesses %}
-                <tr>
-                    <td>
-                        <p><a href="{{ path("app_business_view", {
-                                "id": business.id}) }}">
-                                View
-                            </a></p>
-                        <p><a href="{{ path("app_business_update", {
-                                "id": business.id}) }}">
-                                Update
-                            </a></p>
-                        <p>
-                        <form action="{{ path('app_business_delete',{
-                            "id": business.id}
-                        ) }}" method="post">
-                            <button type="submit">Delete</button>
-                        </form>
-                        </p>
-                    </td>
-                    <td>
-                        {{ business.id }}
-                    </td>
-                    <td>
-                        {{ business.name }}
-                    </td>
-                    <td>
-                        {{ business.city }}
-                    </td>
-                    <td>
-                        {{ business.street }}
-                    </td>
-                    <td>
-                        {{ business.houseNumber }}
-                    </td>
-                    <td>
-                        {{ business.phoneNumber }}
-                    </td>
-                    <td>
-                        {{ business.businessType.name }}
-                    </td>
+        <br>
+        <div class="d-flex justify-content-center">
+            <table class="table table-striped">
+                <thead>
+                <tr class="table-primary">
+                    <th class="text-center px-3">Actions</th>
+                    <th class="text-center px-3">Id</th>
+                    <th class="text-center px-3">Name</th>
+                    <th class="text-center px-3">City</th>
+                    <th class="text-center px-3">Street</th>
+                    <th class="text-center px-3">House Number</th>
+                    <th class="text-center px-3">Phone Number</th>
+                    <th class="text-center px-3">Business Type</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for business in businesses %}
+                    <tr class="table-secondary">
+                        <td class="align-middle px-3">
+                            <form action="{{ path('app_business_delete',{
+                                "id": business.id}
+                            ) }}" method="post">
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" href="{{ path("app_business_update", {
+                                        "id": business.id}) }}">
+                                        Update
+                                    </a>
+                                    <a class="btn btn-secondary" href="{{ path("app_business_view", {
+                                        "id": business.id}) }}">
+                                        View
+                                    </a>
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ business.id }}
+                        </td>
+                        <td class="text-center px-3 text-nowrap align-middle">
+                            {{ business.name }}
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ business.city }}
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ business.street }}
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ business.houseNumber }}
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ business.phoneNumber }}
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ business.businessType.name }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
     </div>
 {% endblock %}

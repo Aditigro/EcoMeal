@@ -18,45 +18,50 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Category Table</h1>
-        <a href="{{ path('app_category_new') }}"> Create New Category</a>
+        <h1 class="text-center">Category</h1>
+        <a class="btn btn-primary position-absolute start-50 translate-middle-x" href="{{ path('app_category_new') }}"> Create New Category</a>
         <br>
-        <table>
-            <thead>
-            <tr>
-                <th>Actions</th>
-                <th>Id</th>
-                <th>Name</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for category in categories %}
-                <tr>
-                    <td>
-                        <p><a href="{{ path("app_category_view", {
-                                "id": category.id}) }}">
-                                View
-                            </a></p>
-                        <p><a href="{{ path("app_category_update", {
-                                "id": category.id}) }}">
-                                Update
-                            </a></p>
-                        <p>
-                        <form action="{{ path('app_category_delete',{
-                            "id": category.id}
-                        ) }}" method="post">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                    <td>
-                        {{ category.id }}
-                    </td>
-                    <td>
-                        {{ category.name }}
-                    </td>
+        <br>
+        <div class="d-flex justify-content-center">
+            <table class="table table-striped">
+                <thead>
+                <tr class="table-primary">
+                    <th class="text-center px-3">Actions</th>
+                    <th class="text-center px-3">Id</th>
+                    <th class="text-center px-3">Name</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr class="table-secondary">
+                        <td class="align-middle text-center">
+                            <form action="{{ path('app_category_delete',{
+                                "id": category.id}
+                            ) }}" method="post">
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" href="{{ path("app_category_update", {
+                                        "id": category.id}) }}">
+                                        Update
+                                    </a>
+                                    <a class="btn btn-secondary" href="{{ path("app_category_view", {
+                                        "id": category.id}) }}">
+                                        View
+                                    </a>
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ category.id }}
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {{ category.name }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
     </div>
 {% endblock %}
