@@ -75,7 +75,11 @@
                             {{ business.phoneNumber }}
                         </td>
                         <td class="text-center px-3 align-middle">
-                            {{ business.businessType.name }}
+                            <a href="{{ path('app_business_type_view',{
+                                'id' : business.businessType.id
+                            }) }}">
+                                {{ business.businessType.name }}
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

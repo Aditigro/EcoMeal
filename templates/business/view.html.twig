@@ -23,7 +23,12 @@
         <p class="text-center py-1"> Id: {{ business.id }}</p>
         <p class="text-center py-1"> Address: {{ business.city }}, {{ business.street }} {{ business.houseNumber }}</p>
         <p class="text-center py-1"> Phone: {{ business.phoneNumber }}</p>
-        <p class="text-center py-1"> Type: {{ business.businessType.name }}</p>
+        <p class="text-center py-1"> Type: <a href="{{ path('app_business_type_view',{
+                'id' : business.businessType.id
+            }) }}">
+                {{ business.businessType.name }}
+            </a>
+        </p>
         <div class="text-center">
             <form action="{{ path('app_business_delete',{
                 "id": business.id}
@@ -107,7 +112,11 @@
                             {{ package.createdAt|date('Y-m-d H:i:s') }}
                         </td>
                         <td class="text-center px-3 align-middle">
-                            {{ package.category.name }}
+                            <a href="{{ path('app_category_view',{
+                                'id' : package.category.id
+                            }) }}">
+                                {{ package.category.name }}
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -19,8 +19,8 @@
 
     <div class="example-wrapper">
         <h1 class="text-center">Package</h1>
-        <br>
-        <br>
+        <p class="text-center py-1"><em> To create a new package, access the view page of a
+                <a href="{{ path('app_business') }}">business</a>.</em></p>
         <div class="d-flex justify-content-center">
             <table class="table table-striped">
                 <thead>
@@ -79,10 +79,18 @@
                             {{ package.createdAt|date('Y-m-d H:i:s') }}
                         </td>
                         <td class="text-center px-3 align-middle">
-                            {{ package.category.name }}
+                            <a href="{{ path('app_category_view',{
+                                'id' : package.category.id
+                            }) }}">
+                                {{ package.category.name }}
+                            </a>
                         </td>
                         <td class="text-center px-3 align-middle">
-                            {{ package.business.name }}
+                            <a href="{{ path('app_business_view',{
+                                'id' : package.business.id
+                            }) }}">
+                                {{ package.business.name }}
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

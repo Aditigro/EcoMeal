@@ -28,8 +28,18 @@
             <p class="text-center py-1"> This package has no photo </p>
         {% endif %}
         <p class="text-center py-1"> Created: {{ package.createdAt|date('Y-m-d H:i:s') }}</p>
-        <p class="text-center py-1"> From: {{ package.business.name }}</p>
-        <p class="text-center py-1"> Category: {{ package.category.name }}</p>
+        <p class="text-center py-1"> Category: <a href="{{ path('app_category_view',{
+                'id' : package.category.id
+            }) }}">
+                {{ package.category.name }}
+            </a>
+        </p>
+        <p class="text-center py-1"> Business: <a href="{{ path('app_business_view',{
+                'id' : package.business.id
+            }) }}">
+                {{ package.business.name }}
+            </a>
+        </p>
         <div class="text-center">
             <form action="{{ path('app_package_delete',{
                 "id": package.id}

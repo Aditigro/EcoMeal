@@ -21,8 +21,18 @@
         <h1 class="text-center">Order</h1>
         <p class="text-center py-1"> Id: {{ order.id }}</p>
         <p class="text-center py-1"> Created: {{ order.createdAt|date('Y-m-d H:i:s') }}</p>
-        <p class="text-center py-1"> Package: {{ order.package.name }}</p>
-        <p class="text-center py-1"> Consumer: {{ order.consumer.firstName }} {{ order.consumer.lastName }}</p>
+        <p class="text-center py-1"> Package: <a href="{{ path('app_package_view',{
+                'id' : order.package.id
+            }) }}">
+                {{ order.package.name }}
+            </a>
+        </p>
+        <p class="text-center py-1"> Consumer: <a href="{{ path('app_consumer_view',{
+                'id' : order.consumer.id
+            }) }}">
+                {{ order.consumer.firstName }} {{ order.consumer.lastName }}
+            </a>
+        </p>
         <div class="text-center">
             <form action="{{ path('app_order_delete',{
                 "id": order.id}

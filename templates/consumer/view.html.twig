@@ -84,7 +84,11 @@
                             {{ order.createdAt|date('Y-m-d H:i:s') }}
                         </td>
                         <td class="text-center px-3 align-middle">
-                            {{ order.package.name }}
+                            <a href="{{ path('app_package_view',{
+                                'id' : order.package.id
+                            }) }}">
+                                {{ order.package.name }}
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

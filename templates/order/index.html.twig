@@ -19,8 +19,8 @@
 
     <div class="example-wrapper">
         <h1 class="text-center">Order</h1>
-        <br>
-        <br>
+        <p class="text-center py-1"><em> To create a new order, access the view page of a
+                <a href="{{ path('app_consumer') }}">consumer</a>.</em></p>
         <div class="d-flex justify-content-center">
             <table class="table table-striped">
                 <thead>
@@ -59,10 +59,18 @@
                             {{ order.createdAt|date('Y-m-d H:i:s') }}
                         </td>
                         <td class="text-center px-3 align-middle">
-                            {{ order.package.name }}
+                            <a href="{{ path('app_package_view',{
+                                'id' : order.package.id
+                            }) }}">
+                                {{ order.package.name }}
+                            </a>
                         </td>
                         <td class="text-center px-3 align-middle">
-                            {{ order.consumer.firstName }} {{ order.consumer.lastName }}
+                            <a href="{{ path('app_consumer_view',{
+                                'id' : order.consumer.id
+                            }) }}">
+                                {{ order.consumer.firstName }} {{ order.consumer.lastName }}
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
