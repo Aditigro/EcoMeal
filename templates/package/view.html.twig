@@ -18,29 +18,33 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Package View</h1>
-        <p> Id: {{ package.id }}</p>
-        <p> Name: {{ package.name }}</p>
-        <p> Description: {{ package.description }}</p>
-        <p> Price: {{ package.price }}</p>
+        <h1 class="text-center">{{ package.name }}</h1>
+        <p class="text-center py-1"> Id: {{ package.id }}</p>
+        <p class="text-center py-1"> Description: {{ package.description }}</p>
+        <p class="text-center py-1"> Price: {{ package.price }}</p>
         {% if package.photo %}
-            <img src="{{ package.photo }}" alt="A photo of the package">
+            <img src="{{ package.photo }}" alt="A photo of the package" class="text-center py-1">
         {% else %}
-            <p> This package has no photo </p>
+            <p class="text-center py-1"> This package has no photo </p>
         {% endif %}
-        <p> Created: {{ package.createdAt|date('Y-m-d H:i:s') }}</p>
-        <p> From: {{ package.business.name }}</p>
-        <p> Category: {{ package.category.name }}</p>
-        <br>
-        <p>
-            <a href="{{ path("app_package_update", {
-                "id" : package.id,
-            }) }}">
-                Update
-            </a>
-        </p>
-        <p>
-            <a href="{{ path("app_package") }}"> Back </a>
-        </p>
+        <p class="text-center py-1"> Created: {{ package.createdAt|date('Y-m-d H:i:s') }}</p>
+        <p class="text-center py-1"> From: {{ package.business.name }}</p>
+        <p class="text-center py-1"> Category: {{ package.category.name }}</p>
+        <div class="text-center">
+            <form action="{{ path('app_package_delete',{
+                "id": package.id}
+            ) }}" method="post">
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="{{ path("app_package_update", {
+                        "id": package.id}) }}">
+                        Update
+                    </a>
+                    <a class="btn btn-secondary" href="{{ path("app_package") }}">
+                        Back
+                    </a>
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}

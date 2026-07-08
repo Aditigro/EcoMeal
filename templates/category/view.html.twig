@@ -18,18 +18,23 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Category View</h1>
-        <p>Id: {{ category.id }}</p>
-        <p>Name: {{ category.name }}</p>
-        <br>
-        <p>
-            <a href="{{ path("app_category_update", {
-                "id": category.id}) }}">
-                Update
-            </a>
-        </p>
-        <p>
-            <a href="{{ path('app_category') }}">Back</a>
-        </p>
+        <h1 class="text-center">{{ category.name }}</h1>
+        <p class="text-center py-1">Id: {{ category.id }}</p>
+        <div class="text-center">
+            <form action="{{ path('app_category_delete',{
+                "id": category.id}
+            ) }}" method="post">
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="{{ path("app_category_update", {
+                        "id": category.id}) }}">
+                        Update
+                    </a>
+                    <a class="btn btn-secondary" href="{{ path("app_category") }}">
+                        Back
+                    </a>
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}

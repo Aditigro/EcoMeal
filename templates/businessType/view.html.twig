@@ -18,19 +18,24 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Business Type View</h1>
-        <p> Id: {{ businessType.id }}</p>
-        <p> Name: {{ businessType.name }}</p>
-        <br>
-        <p>
-            <a href="{{ path("app_business_type_update", {
-                "id": businessType.id}) }}">
-                Update
-            </a>
-        </p>
-        <p>
-            <a href="{{ path('app_business_type') }}">Back</a>
-        </p>
+        <h1 class="text-center">{{ businessType.name }}</h1>
+        <p class="text-center py-1"> Id: {{ businessType.id }}</p>
+        <div class="text-center">
+            <form action="{{ path('app_business_type_delete',{
+                "id": businessType.id}
+            ) }}" method="post">
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="{{ path("app_business_type_update", {
+                        "id": businessType.id}) }}">
+                        Update
+                    </a>
+                    <a class="btn btn-secondary" href="{{ path("app_business_type") }}">
+                        Back
+                    </a>
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </div>
+            </form>
+        </div>
     </div>
 
 {% endblock %}
