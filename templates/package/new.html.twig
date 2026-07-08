@@ -18,19 +18,29 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Create a new Package for {{ business.name }}</h1>
-        {{ form_start(form) }}
-            {{ form_row(form.name) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.price) }}
-            {{ form_row(form.photo) }}
-            {{ form_row(form.category) }}
-            {{ form_row(form.submit) }}
-        {{ form_end(form) }}
+        <h1 class="text-center">Create a new Package for {{ business.name }}</h1>
         <br>
-        <a href="{{ path('app_business_view', {
-            "id": business.id
-        }) }}">Back</a>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-8">
+                    {{ form_start(form) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.description) }}
+                        {{ form_row(form.price) }}
+                        {{ form_row(form.photo) }}
+                        {{ form_row(form.category) }}
+                        <div class="row">
+                            <div class="col-sm-6 btn-group">
+                                {{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+                                <a href="{{ path('app_business_view', {
+                                    "id": business.id
+                                }) }}" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </div>
 
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

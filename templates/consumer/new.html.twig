@@ -18,15 +18,25 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Create a new Consumer</h1>
-        {{ form_start(form) }}
-            {{ form_row(form.firstName) }}
-            {{ form_row(form.lastName) }}
-            {{ form_row(form.phoneNumber) }}
-            {{ form_row(form.submit) }}
-        {{ form_end(form) }}
+        <h1 class="text-center">Create a new Consumer</h1>
         <br>
-        <a href="{{ path('app_consumer') }}">Back</a>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-8">
+                    {{ form_start(form) }}
+                        {{ form_row(form.firstName) }}
+                        {{ form_row(form.lastName) }}
+                        {{ form_row(form.phoneNumber) }}
+                        <div class="row">
+                            <div class="col-sm-6 btn-group">
+                                {{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+                                <a href="{{ path('app_consumer') }}" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </div>
 
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -18,15 +18,25 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Create a new Order for {{ consumer.firstName }} {{ consumer.lastName }}</h1>
-        {{ form_start(form) }}
-            {{ form_row(form.package) }}
-            {{ form_row(form.submit) }}
-        {{ form_end(form) }}
+        <h1 class="text-center">Create a new Order for {{ consumer.firstName }} {{ consumer.lastName }}</h1>
         <br>
-        <a href="{{ path('app_consumer_view', {
-            "id": consumer.id
-        }) }}">Back</a>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-8">
+                    {{ form_start(form) }}
+                        {{ form_row(form.package) }}
+                        <div class="row">
+                            <div class="col-sm-6 btn-group">
+                                {{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+                                <a href="{{ path('app_consumer_view', {
+                                    "id": consumer.id
+                                }) }}" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </div>
 
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
