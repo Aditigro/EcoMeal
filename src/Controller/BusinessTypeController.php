@@ -18,6 +18,10 @@ class BusinessTypeController extends AbstractController
     #[Route('/business_type', 'app_business_type')]
     public function index(BusinessTypeRepository $repository): Response
     {
+        if(! $this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('app_access_denied');
+        }
+
         $businessTypes = $repository->findAll();
 
         return $this->render('businessType/index.html.twig', [

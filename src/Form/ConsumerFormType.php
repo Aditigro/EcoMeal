@@ -19,9 +19,10 @@ class ConsumerFormType extends AbstractType
         $builder
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('phoneNumber', TextType::class)
-            ->add('submit', SubmitType::class);
-
+            ->add('phoneNumber', TextType::class);
+        if ($options['with_submit']) {
+            $builder->add('submit', SubmitType::class);
+        }
 
     }
 
@@ -29,6 +30,7 @@ class ConsumerFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Consumer::class,
+            'with_submit' => true,
         ]);
     }
 

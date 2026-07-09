@@ -33,7 +33,9 @@
                     <a class="btn btn-secondary" href="{{ path("app_consumer") }}">
                         Back
                     </a>
-                    <button class="btn btn-danger" type="submit">Delete</button>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    {% endif %}
                 </div>
             </form>
         </div>
@@ -73,7 +75,9 @@
                                         "id": order.id}) }}">
                                         View
                                     </a>
-                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                    {% endif %}
                                 </div>
                             </form>
                         </td>

@@ -8,6 +8,7 @@ use App\Repository\BusinessRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,8 +16,19 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BusinessController extends AbstractController
 {
     #[Route('/business', name: 'app_business', methods: ['GET'])]
-    public function index(BusinessRepository $businessRepository): Response
+    public function index(BusinessRepository $businessRepository, Security $security): Response
     {
+        if($this->isGranted('ROLE_BUSINESS')){
+            $user = $security->getUser();
+            $id = $user->getBusiness()->getId();
+
+            return $this->redirectToRoute('app_business_view',[
+                'id' => $id,
+            ]);
+        }else if(! $this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('app_access_denied');
+        }
+
         $businesses = $businessRepository->findAll();
 
         return $this->render('business/index.html.twig', [

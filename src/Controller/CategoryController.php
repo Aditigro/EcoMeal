@@ -16,6 +16,10 @@ class CategoryController extends AbstractController
     #[Route('/category', name: 'app_category')]
     public function index(CategoryRepository $repository) : Response
     {
+        if(! $this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('app_access_denied');
+        }
+
         $categories = $repository->findAll();
 
         return $this->render('category/index.html.twig', [
