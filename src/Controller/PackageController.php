@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Business;
+use App\Entity\Order;
 use App\Entity\Package;
 use App\Form\PackageFormType;
 use App\Repository\PackageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -24,11 +27,20 @@ final class PackageController extends AbstractController
         ]);
     }
     #[Route('/package/{id}', name: 'app_package_view')]
-    public function view(Package $package) : Response
+    public function view(Package $package, Security $security) : Response
     {
+        $editable = true;
+        if($this->isGranted('ROLE_CONSUMER')){
+            $editable = false;
+        }else if($this->isGranted('ROLE_BUSINESS')){
+            $user = $security->getUser();
+            $id = $user->getBusiness()->getId();
 
+            $editable = ($id == $package->getBusiness()->getId());
+        }
         return $this->render('package/view.html.twig', [
             'package' => $package,
+            'editable' => $editable,
         ]);
     }
     #[Route('/business/{id}/create_package', name: 'app_package_new', methods: ['GET', 'POST'])]

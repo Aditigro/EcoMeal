@@ -34,6 +34,7 @@
                     <th class="text-center px-3 text-nowrap">Created At</th>
                     <th class="text-center px-3">Category</th>
                     <th class="text-center px-3">Business</th>
+                    <th class="text-center px-3">Available</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,15 +45,22 @@
                                 "id": package.id}
                             ) }}" method="post">
                                 <div class="btn-group">
-                                    <a class="btn btn-primary" href="{{ path("app_package_update", {
-                                        "id": package.id}) }}">
-                                        Update
-                                    </a>
-                                    <a class="btn btn-secondary" href="{{ path("app_package_view", {
-                                        "id": package.id}) }}">
-                                        View
-                                    </a>
-                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <a class="btn btn-primary" href="{{ path("app_package_update", {
+                                            "id": package.id}) }}">
+                                            Update
+                                        </a>
+                                        <a class="btn btn-secondary" href="{{ path("app_package_view", {
+                                            "id": package.id}) }}">
+                                            View
+                                        </a>
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                    {% else %}
+                                        <a class="btn btn-primary" href="{{ path("app_package_view", {
+                                            "id": package.id}) }}">
+                                            View
+                                        </a>
+                                    {% endif %}
                                 </div>
                             </form>
                         </td>
@@ -91,6 +99,13 @@
                             }) }}">
                                 {{ package.business.name }}
                             </a>
+                        </td>
+                        <td class="text-center px-3 align-middle">
+                            {% if package.isAvailable %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

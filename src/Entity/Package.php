@@ -146,4 +146,9 @@ class Package
 
         return $this;
     }
+
+    public function isAvailable() : bool
+    {
+        return $this->consumer_order == null;
+    }
 }

@@ -30,6 +30,14 @@ class PackageRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
+    public function findAvailable(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.consumer_order', 'o')
+            ->where('o.id IS NULL')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Package
 //    {

@@ -45,14 +45,20 @@
                 "id": package.id}
             ) }}" method="post">
                 <div class="btn-group">
-                    <a class="btn btn-primary" href="{{ path("app_package_update", {
-                        "id": package.id}) }}">
-                        Update
-                    </a>
-                    <a class="btn btn-secondary" href="{{ path("app_package") }}">
-                        Back
-                    </a>
-                    <button class="btn btn-danger" type="submit">Delete</button>
+                    {% if editable %}
+                        <a class="btn btn-primary" href="{{ path("app_package_update", {
+                            "id": package.id}) }}">
+                            Update
+                        </a>
+                        <a class="btn btn-secondary" href="{{ path("app_package") }}">
+                            Back
+                        </a>
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    {% else %}
+                        <a class="btn btn-primary" href="{{ path("app_package") }}">
+                            Back
+                        </a>
+                    {% endif %}
                 </div>
             </form>
         </div>
