@@ -7,7 +7,9 @@ use App\Entity\Order;
 use App\Form\OrderFormType;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,9 +17,34 @@ use Symfony\Component\Routing\Attribute\Route;
 class OrderController extends AbstractController
 {
     #[Route('/order', name: 'app_order')]
-    public function index(OrderRepository $repository) : Response
+    public function index(OrderRepository $repository, Security $security, EntityManagerInterface $entityManager) : Response
     {
         $orders = $repository->findAll();
+
+        if($this->isGranted('ROLE_CONSUMER')){
+            $user = $security->getUser();
+            $id = $user->getConsumer()->getId();
+
+            $orders = (new QueryBuilder($entityManager))
+                ->select('o')
+                ->from(Order::class, 'o')
+                ->where('o.consumer = ?1')
+                ->setParameter(1, $id)
+                ->getQuery()
+                ->getResult();
+        }else if($this->isGranted('ROLE_BUSINESS')){
+            $user = $security->getUser();
+            $id = $user->getBusiness()->getId();
+
+            $orders = (new QueryBuilder($entityManager))
+                ->select('o')
+                ->from(Order::class, 'o')
+                ->join('o.package', 'p')
+                ->where('p.business = ?1')
+                ->setParameter(1, $id)
+                ->getQuery()
+                ->getResult();
+        }
 
         return $this->render('order/index.html.twig',[
             'orders' => $orders,
