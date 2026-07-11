@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Consumer;
 use App\Entity\Order;
+use App\Entity\Package;
 use App\Form\OrderFormType;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -85,6 +86,26 @@ class OrderController extends AbstractController
             'form' => $form,
             'consumer' => $consumer,
             ]);
+    }
+
+    #[Route('/consumer/{id}/create_order/{p_id}', name: 'app_order_new_specific', methods: ['GET', 'POST'])]
+    public function new_specific(int $p_id, int $id, Request $request, EntityManagerInterface $entityManager) : Response
+    {
+        $consumer = $entityManager->getRepository(Consumer::class)->find($id);
+        $package = $entityManager->getRepository(Package::class)->find($p_id);
+        $order = new Order();
+
+        $now = new \DateTimeImmutable();
+        $order->setCreatedAt($now);
+        $order->setConsumer($consumer);
+        $order->setPackage($package);
+
+        $entityManager->persist($order);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_consumer_view', [
+            "id" => $consumer->getId(),
+        ]);
     }
 
     #[Route('/order/{id}/update', name: 'app_order_update', methods: ['GET', 'POST'])]
