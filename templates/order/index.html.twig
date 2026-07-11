@@ -19,8 +19,10 @@
 
     <div class="example-wrapper">
         <h1 class="text-center">Order</h1>
-        <p class="text-center py-1"><em> To create a new order, access the view page of a
-                <a href="{{ path('app_consumer') }}">consumer</a>.</em></p>
+        {% if is_granted('ROLE_CONSUMER') %}
+            <p class="text-center py-1"><em> To create a new order, access the view page of a
+                    <a href="{{ path('app_consumer') }}">consumer</a>.</em></p>
+        {% endif %}
         <div class="d-flex justify-content-center">
             <table class="table table-striped">
                 <thead>

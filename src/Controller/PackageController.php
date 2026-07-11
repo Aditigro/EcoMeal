@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Dto\PackageSearchFilter;
 use App\Entity\Business;
 use App\Entity\Order;
 use App\Entity\Package;
+use App\Form\PackageFiltersFormType;
 use App\Form\PackageFormType;
 use App\Repository\PackageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,12 +20,17 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PackageController extends AbstractController
 {
     #[Route('/package', name: 'app_package')]
-    public function index(PackageRepository $repository): Response
+    public function index(Request $request, PackageRepository $repository): Response
     {
-        $packages = $repository->findAll();
+        $filters = new PackageSearchFilter();
+        $form = $this->createForm(PackageFiltersFormType::class, $filters);
+        $form->handleRequest($request);
+
+        $packages = $repository->findByFilter($filters);
 
         return $this->render('package/index.html.twig', [
             'packages' => $packages,
+            'form' => $form,
         ]);
     }
     #[Route('/package/{id}', name: 'app_package_view')]

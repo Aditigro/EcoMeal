@@ -19,9 +19,16 @@
 
     <div class="example-wrapper">
         <h1 class="text-center">Package</h1>
-        <p class="text-center py-1"><em> To create a new package, access the view page of a
-                <a href="{{ path('app_business') }}">business</a>.</em></p>
+        {% if is_granted('ROLE_BUSINESS') %}
+            <p class="text-center py-1"><em> To create a new package, access the view page of a
+                    <a href="{{ path('app_business') }}">business</a>.</em></p>
+        {% endif %}
+        <p>
+            {{ form_start(form) }}
+            {{ form_end(form) }}
+        </p>
         <div class="d-flex justify-content-center">
+
             <table class="table table-striped">
                 <thead>
                 <tr class="table-primary">
