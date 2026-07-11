@@ -43,7 +43,9 @@ class PackageRepository extends ServiceEntityRepository
     public function findByFilter(PackageSearchFilter $filter) : array
     {
         $qb = $this->createQueryBuilder('p')
-            ->leftJoin('p.category', 'c');
+            ->leftJoin('p.category', 'c')
+            ->leftJoin('p.business', 'b')
+            ->leftJoin('b.business_type', 'bt');
 
         if($filter->name)
         {
@@ -67,6 +69,24 @@ class PackageRepository extends ServiceEntityRepository
         {
             $qb->andWhere('c.id = :category')
                 ->setParameter('category', $filter->category->getId());
+        }
+
+        if($filter->businessType)
+        {
+            $qb->andWhere('bt.id = :business_type')
+                ->setParameter('business_type', $filter->businessType->getId());
+        }
+
+        if($filter->business)
+        {
+            $qb->andWhere('b.id = :business')
+                ->setParameter('business', $filter->business->getId());
+        }
+
+        if($filter->city)
+        {
+            $qb->andWhere('b.city LIKE :city')
+                ->setParameter('city', '%'.$filter->city.'%');
         }
 
         return $qb->getQuery()->getResult();

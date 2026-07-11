@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Dto\PackageSearchFilter;
 use App\Entity\Business;
+use App\Entity\BusinessType;
 use App\Entity\Category;
 use App\Entity\Order;
 use App\Entity\Package;
@@ -36,6 +37,20 @@ class PackageFiltersFormType extends AbstractType
                 'required' => false,
                 'choice_label' => "name",
                 'class' => Category::class,
+            ])
+            ->add('businessType', EntityType::class, [
+                'required' => false,
+                'choice_label' => "name",
+                'class' => BusinessType::class,
+            ])
+            ->add('business', EntityType::class, [
+                'required' => false,
+                'choice_label' => "name",
+                'class' => Business::class,
+            ])
+            ->add('city', SearchType::class,[
+                'required' => false,
+                'label' => 'City'
             ])
             ->add('submit', SubmitType::class)
         ;

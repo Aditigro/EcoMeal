@@ -2,6 +2,7 @@
 
 namespace App\Dto;
 
+use App\Entity\Business;
 use App\Entity\BusinessType;
 use App\Entity\Category;
 
@@ -15,5 +16,9 @@ class PackageSearchFilter
 
     public ?Category $category = null;
 
-    //TODO: Add more filters (BusinessType, Business, City, etc)
+    public ?BusinessType $businessType = null;
+
+    public ?Business $business = null;
+
+    public ?string $city = null;
 }
