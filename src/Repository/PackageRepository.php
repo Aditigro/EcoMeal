@@ -89,7 +89,20 @@ class PackageRepository extends ServiceEntityRepository
                 ->setParameter('city', '%'.$filter->city.'%');
         }
 
-        return $qb->getQuery()->getResult();
+
+        $result =  $qb->getQuery()->getResult();
+        $final_result = [];
+
+        if($filter->available){
+            foreach ($result as $package){
+                if($package->isAvailable()){
+                    array_push($final_result, $package);
+                }
+            }
+            return $final_result;
+        }
+
+        return $result;
     }
 
 //    public function findOneBySomeField($value): ?Package

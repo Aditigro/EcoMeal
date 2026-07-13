@@ -21,4 +21,6 @@ class PackageSearchFilter
     public ?Business $business = null;
 
     public ?string $city = null;
+
+    public bool $available = false;
 }

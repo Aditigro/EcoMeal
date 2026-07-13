@@ -10,6 +10,7 @@ use App\Entity\Order;
 use App\Entity\Package;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -51,6 +52,10 @@ class PackageFiltersFormType extends AbstractType
             ->add('city', SearchType::class,[
                 'required' => false,
                 'label' => 'City'
+            ])
+            ->add('available', CheckboxType::class,[
+              'required' => false,
+              'label' => "Available"
             ])
             ->add('submit', SubmitType::class)
         ;
