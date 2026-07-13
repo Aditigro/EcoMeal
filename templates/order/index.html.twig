@@ -28,7 +28,6 @@
                 <thead>
                 <tr class="table-primary">
                     <th class="text-center px-3">Actions</th>
-                    <th class="text-center px-3">Id</th>
                     <th class="text-center px-3 text-nowrap">Created At</th>
                     <th class="text-center px-3">Package</th>
                     <th class="text-center px-3">Consumer</th>
@@ -53,9 +52,6 @@
                                     <button class="btn btn-danger" type="submit">Delete</button>
                                 </div>
                             </form>
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            {{ order.id }}
                         </td>
                         <td class="text-center px-3 align-middle">
                             {{ order.createdAt|date('Y-m-d H:i:s') }}

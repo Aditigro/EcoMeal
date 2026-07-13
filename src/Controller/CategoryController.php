@@ -30,6 +30,9 @@ class CategoryController extends AbstractController
     #[Route('/category/{id}', name: 'app_category_view', methods: ['GET'])]
     public function view(Category $category): Response
     {
+        if(! $this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('app_access_denied');
+        }
         return $this->render('category/view.html.twig',[
             'category' => $category,
         ]);

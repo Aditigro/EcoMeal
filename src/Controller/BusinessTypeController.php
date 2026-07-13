@@ -31,6 +31,9 @@ class BusinessTypeController extends AbstractController
 
     #[Route('/business_type/{id}', 'app_business_type_view', methods: ['GET'])]
     public function view(int $id, BusinessTypeRepository $repository): Response{
+        if(! $this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('app_access_denied');
+        }
 
         $businessType = $repository->find($id);
 
