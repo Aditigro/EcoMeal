@@ -33,7 +33,7 @@
                     {% for package in packages %}
                         <div class="col">
                             <div class="card h-100">
-                                <img src="{{ package.photo|default("spaghetti.jpg") }}"
+                                <img src="{{ package.photo ? package.photo : asset('spaghetti.jpg') }}"
                                      class="card-img-top"
                                      alt="Default image"
                                      style="width: 100%; height: 200px; object-fit: cover;">
