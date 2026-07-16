@@ -19,20 +19,26 @@
 
     <div class="example-wrapper">
         <h1 class="text-center">{{ consumer.firstName }} {{ consumer.lastName }}</h1>
-        <p class="text-center py-1"> Id: {{ consumer.id }}</p>
         <p class="text-center py-1"> Phone: {{ consumer.phoneNumber }}</p>
         <div class="text-center">
             <form action="{{ path('app_consumer_delete',{
                 "id": consumer.id}
             ) }}" method="post">
                 <div class="btn-group">
-                    <a class="btn btn-primary" href="{{ path("app_consumer_update", {
-                        "id": consumer.id}) }}">
-                        Update
-                    </a>
-                    <a class="btn btn-secondary" href="{{ path("app_consumer") }}">
-                        Back
-                    </a>
+                    {% if is_granted('ROLE_CONSUMER') %}
+                        <a class="btn btn-primary" href="{{ path("app_consumer_update", {
+                            "id": consumer.id}) }}">
+                            Update
+                        </a>
+                        <a class="btn btn-secondary" href="{{ path("app_consumer") }}">
+                            Back
+                        </a>
+                    {% else %}
+                        <a class="btn btn-secondary" href="{{ path("app_order") }}">
+                            Back
+                        </a>
+                    {% endif %}
+
                     {% if is_granted('ROLE_ADMIN') %}
                         <button class="btn btn-danger" type="submit">Delete</button>
                     {% endif %}
@@ -40,64 +46,62 @@
             </form>
         </div>
         <br>
-        <h2 class="text-center">Orders:</h2>
-        <div class="text-center">
-            <a href="{{ path("app_order_new", {
-                "id" : consumer.id
-            }) }}" class="btn btn-primary">
-                Add order
-            </a>
-        </div>
-        <br>
-        <div class="d-flex justify-content-center">
-            <table class="table table-striped">
-                <thead>
-                <tr class="table-primary">
-                    <th class="text-center px-3">Actions</th>
-                    <th class="text-center px-3">Id</th>
-                    <th class="text-center px-3">Created At</th>
-                    <th class="text-center px-3">Package</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for order in consumer.orders %}
-                    <tr class="table-secondary">
-                        <td class="align-middle px-3">
-                            <form action="{{ path('app_order_delete',{
-                                "id": order.id}
-                            ) }}" method="post">
-                                <div class="btn-group">
-                                    <a class="btn btn-primary" href="{{ path("app_order_update", {
-                                        "id": order.id}) }}">
-                                        Update
-                                    </a>
-                                    <a class="btn btn-secondary" href="{{ path("app_order_view", {
-                                        "id": order.id}) }}">
-                                        View
-                                    </a>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                    {% endif %}
-                                </div>
-                            </form>
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            {{ order.id }}
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            {{ order.createdAt|date('Y-m-d H:i:s') }}
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            <a href="{{ path('app_package_view',{
-                                'id' : order.package.id
-                            }) }}">
-                                {{ order.package.name }}
-                            </a>
-                        </td>
+        {% if is_granted('ROLE_CONSUMER') %}
+            <h2 class="text-center">Orders:</h2>
+            <div class="text-center">
+                <a href="{{ path("app_order_new", {
+                    "id" : consumer.id
+                }) }}" class="btn btn-primary">
+                    Add order
+                </a>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center">
+                <table class="table table-striped">
+                    <thead>
+                    <tr class="table-primary">
+                        <th class="text-center px-3">Actions</th>
+                        <th class="text-center px-3">Id</th>
+                        <th class="text-center px-3">Created At</th>
+                        <th class="text-center px-3">Package</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                    {% for order in consumer.orders %}
+                        <tr class="table-secondary">
+                            <td class="align-middle px-3">
+                                <form action="{{ path('app_order_delete',{
+                                    "id": order.id}
+                                ) }}" method="post">
+                                    <div class="btn-group">
+                                        <a class="btn btn-secondary" href="{{ path("app_order_view", {
+                                            "id": order.id}) }}">
+                                            View
+                                        </a>
+
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+
+                                    </div>
+                                </form>
+                            </td>
+                            <td class="text-center px-3 align-middle">
+                                {{ order.id }}
+                            </td>
+                            <td class="text-center px-3 align-middle">
+                                {{ order.createdAt|date('Y-m-d H:i:s') }}
+                            </td>
+                            <td class="text-center px-3 align-middle">
+                                <a href="{{ path('app_package_view',{
+                                    'id' : order.package.id
+                                }) }}">
+                                    {{ order.package.name }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

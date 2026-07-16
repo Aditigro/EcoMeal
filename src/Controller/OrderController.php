@@ -134,4 +134,13 @@ class OrderController extends AbstractController
 
         return $this->redirectToRoute('app_order');
     }
+
+    #[Route('/order/fulfill/{id}', name: "app_order_fulfill")]
+    public function fulfill(Order $order, EntityManagerInterface $entityManager) : Response
+    {
+        $entityManager->remove($order->getPackage());
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_order');
+    }
 }

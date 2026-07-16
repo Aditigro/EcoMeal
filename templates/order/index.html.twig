@@ -30,7 +30,9 @@
                     <th class="text-center px-3">Actions</th>
                     <th class="text-center px-3 text-nowrap">Created At</th>
                     <th class="text-center px-3">Package</th>
-                    <th class="text-center px-3">Consumer</th>
+                    {% if not is_granted('ROLE_CONSUMER') %}
+                        <th class="text-center px-3">Consumer</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -41,15 +43,17 @@
                                 "id": order.id}
                             ) }}" method="post">
                                 <div class="btn-group">
-                                    <a class="btn btn-primary" href="{{ path("app_order_update", {
-                                        "id": order.id}) }}">
-                                        Update
-                                    </a>
+                                    {% if is_granted('ROLE_BUSINESS') %}
+                                        <a class="btn btn-primary" href="{{ path("app_order_fulfill", {
+                                            "id": order.id}) }}">
+                                            Fulfill
+                                        </a>
+                                    {% endif %}
                                     <a class="btn btn-secondary" href="{{ path("app_order_view", {
                                         "id": order.id}) }}">
                                         View
                                     </a>
-                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                    <button class="btn btn-danger" type="submit">Cancel</button>
                                 </div>
                             </form>
                         </td>
@@ -63,13 +67,15 @@
                                 {{ order.package.name }}
                             </a>
                         </td>
-                        <td class="text-center px-3 align-middle">
-                            <a href="{{ path('app_consumer_view',{
-                                'id' : order.consumer.id
-                            }) }}">
-                                {{ order.consumer.firstName }} {{ order.consumer.lastName }}
-                            </a>
-                        </td>
+                        {% if not is_granted('ROLE_CONSUMER') %}
+                            <td class="text-center px-3 align-middle">
+                                <a href="{{ path('app_consumer_view',{
+                                    'id' : order.consumer.id
+                                }) }}">
+                                    {{ order.consumer.firstName }} {{ order.consumer.lastName }}
+                                </a>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

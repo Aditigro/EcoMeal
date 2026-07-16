@@ -1,0 +1,63 @@
+<div class="col">
+    <div class="card h-100">
+        <a href="{{ path("app_package_view", {
+            "id": package.id}) }}">
+            <img src="{{ package.photo ? package.photo : asset('spaghetti.jpg') }}"
+                 class="card-img-top"
+                 alt="Default image"
+                 style="width: 100%; height: 200px; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title">{{ package.name }}</h5>
+                <p class="card-text">{{ package.business.name }}</p>
+                <p class="card-text">{{ package.price }} RON</p>
+                <form action="{{ path('app_package_delete',{
+                    "id": package.id}
+                ) }}" method="post">
+                    <div class="text-center">
+                        {% if is_granted('ROLE_CONSUMER') %}
+                            {% if package.isAvailable %}
+                                <a class="btn btn-primary" href={{ path("app_order_new_specific", {
+                                    "id": app.user.consumer.id,
+                                    "p_id" : package.id}) }}>
+                                    Order
+                                </a>
+                            {% endif %}
+                        {% elseif is_granted('ROLE_ADMIN') %}
+                        <div class="btn-group">
+                            <a class="btn btn-primary" href="{{ path("app_package_update", {
+                                "id": package.id}) }}">
+                                Update
+                            </a>
+                            <a class="btn btn-secondary" href="{{ path("app_package_view", {
+                                "id": package.id}) }}">
+                                View
+                            </a>
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </div>
+                        {% else %}
+                            {% if (app.user.business == package.business) %}
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" href="{{ path("app_package_update", {
+                                        "id": package.id}) }}">
+                                        Update
+                                    </a>
+                                    <a class="btn btn-secondary" href="{{ path("app_package_view", {
+                                        "id": package.id}) }}">
+                                        View
+                                    </a>
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </div>
+                                {% else %}
+                                <a class="btn btn-primary" href="{{ path("app_package_view", {
+                                    "id": package.id}) }}">
+                                    View
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </a>
+    </div>
+</div>
+

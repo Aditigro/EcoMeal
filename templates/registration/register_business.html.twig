@@ -3,9 +3,15 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register Business</h1>
-    <p><em>Looking to <a href="{{ path('app_register') }}">register a consumer</a>?</em></p>
-
+<div class="d-flex justify-content-center">
+    <br>
+    <br>
+    <div class="text-center">
+        <h1>Register Business</h1>
+        <p><em>Looking to <a href="{{ path('app_register') }}">register a consumer</a>?</em></p>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
@@ -18,4 +24,5 @@
 
         <button type="submit" class="btn btn-primary">Register</button>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}

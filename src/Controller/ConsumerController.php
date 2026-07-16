@@ -42,14 +42,9 @@ class ConsumerController extends AbstractController
 
         $consumer = $repository->find($id);
 
-        if($user && $user->getConsumer() && $user->getConsumer()->getId() == $id){
-            return $this->render('consumer/view.html.twig', [
-                'consumer' => $consumer,
-            ]);
-        }else{
-            return new Response("<h1> Access denied </h1>>");
-        }
-
+        return $this->render('consumer/view.html.twig', [
+            'consumer' => $consumer,
+        ]);
 
     }
 

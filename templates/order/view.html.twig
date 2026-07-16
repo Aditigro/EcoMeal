@@ -19,7 +19,6 @@
 
     <div class="example-wrapper">
         <h1 class="text-center">Order</h1>
-        <p class="text-center py-1"> Id: {{ order.id }}</p>
         <p class="text-center py-1"> Created: {{ order.createdAt|date('Y-m-d H:i:s') }}</p>
         <p class="text-center py-1"> Package: <a href="{{ path('app_package_view',{
                 'id' : order.package.id

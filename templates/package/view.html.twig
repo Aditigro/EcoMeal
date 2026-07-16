@@ -19,21 +19,17 @@
 
     <div class="example-wrapper">
         <h1 class="text-center">{{ package.name }}</h1>
-        <p class="text-center py-1"> Id: {{ package.id }}</p>
         <p class="text-center py-1"> Description: {{ package.description }}</p>
         <p class="text-center py-1"> Price: {{ package.price }}</p>
         {% if package.photo %}
-            <img src="{{ package.photo }}" alt="A photo of the package" class="text-center py-1">
+            <div class="text-center">
+                <img src="{{ package.photo }}" alt="A photo of the package" class="text-center py-1">
+            </div>
         {% else %}
             <p class="text-center py-1"> This package has no photo </p>
         {% endif %}
         <p class="text-center py-1"> Created: {{ package.createdAt|date('Y-m-d H:i:s') }}</p>
-        <p class="text-center py-1"> Category: <a href="{{ path('app_category_view',{
-                'id' : package.category.id
-            }) }}">
-                {{ package.category.name }}
-            </a>
-        </p>
+        <p class="text-center py-1"> Category: {{ package.category.name }} </p>
         <p class="text-center py-1"> Business: <a href="{{ path('app_business_view',{
                 'id' : package.business.id
             }) }}">

@@ -28,7 +28,15 @@
             <span class="navbar-brand"> EcoMeal </span>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    {% if is_granted('ROLE_BUSINESS') or is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_BUSINESS') %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ current_path == path('app_business') ? 'active' : '' }}"
+                               href="{{path('app_business')}}" >
+                                My Business
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
                             <a class="nav-link {{ current_path == path('app_business') ? 'active' : '' }}"
                                href="{{path('app_business')}}" >
@@ -61,12 +69,14 @@
                         </li>
                     {% endif %}
                     {% if app.user %}
-                        <li class="nav-item">
-                            <a class="nav-link {{ current_path == path('app_package') ? 'active' : '' }}"
-                               href="{{path('app_package')}}">
-                                Package
-                            </a>
-                        </li>
+                        {% if is_granted('ROLE_CONSUMER') or is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a class="nav-link {{ current_path == path('app_package') ? 'active' : '' }}"
+                                   href="{{path('app_package')}}">
+                                    Package
+                                </a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link {{ current_path == path('app_order') ? 'active' : '' }}"
                                href="{{path('app_order')}}">

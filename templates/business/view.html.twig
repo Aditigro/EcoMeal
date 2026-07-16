@@ -20,27 +20,27 @@
     <div class="example-wrapper">
         <h1 class="text-center">{{ business.name }}</h1>
         <br>
-        <p class="text-center py-1"> Id: {{ business.id }}</p>
         <p class="text-center py-1"> Address: {{ business.city }}, {{ business.street }} {{ business.houseNumber }}</p>
         <p class="text-center py-1"> Phone: {{ business.phoneNumber }}</p>
-        <p class="text-center py-1"> Type: <a href="{{ path('app_business_type_view',{
-                'id' : business.businessType.id
-            }) }}">
-                {{ business.businessType.name }}
-            </a>
-        </p>
+        <p class="text-center py-1"> Type: {{ business.businessType.name }}</p>
         <div class="text-center">
             <form action="{{ path('app_business_delete',{
                 "id": business.id}
             ) }}" method="post">
                 <div class="btn-group">
-                    <a class="btn btn-primary" href="{{ path("app_business_update", {
-                        "id": business.id}) }}">
-                        Update
-                    </a>
-                    <a class="btn btn-secondary" href="{{ path("app_business") }}">
-                        Back
-                    </a>
+                    {% if is_granted('ROLE_BUSINESS') %}
+                        <a class="btn btn-primary" href="{{ path("app_business_update", {
+                            "id": business.id}) }}">
+                            Update
+                        </a>
+                        <a class="btn btn-secondary" href="{{ path("app_business") }}">
+                            Back
+                        </a>
+                    {% else %}
+                        <a class="btn btn-secondary" href="{{ path("app_package") }}">
+                            Back
+                        </a>
+                    {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <button class="btn btn-danger" type="submit">Delete</button>
                     {% endif %}
@@ -49,81 +49,83 @@
         </div>
         <br>
         <h2 class="text-center">Packages: </h2>
-        <div class="text-center">
-            <a href="{{ path("app_package_new", {
-                "id" : business.id
-            }) }}" class="btn btn-primary">
-                Add package
-            </a>
-        </div>
+        {% if is_granted('ROLE_BUSINESS') %}
+            <div class="text-center">
+                <a href="{{ path("app_package_new", {
+                    "id" : business.id
+                }) }}" class="btn btn-primary">
+                    Add package
+                </a>
+            </div>
+        {% endif %}
         <br>
         <div class="d-flex justify-content-center">
-            <table class="table table-striped">
-                <thead>
-                <tr class="table-primary">
-                    <th class="text-center px-3">Actions</th>
-                    <th class="text-center px-3">Id</th>
-                    <th class="text-center px-3">Name</th>
-                    <th class="text-center px-3">Description</th>
-                    <th class="text-center px-3">Price</th>
-                    <th class="text-center px-3">Photo</th>
-                    <th class="text-center px-3">Created At</th>
-                    <th class="text-center px-3">Category</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for package in business.packages %}
-                    <tr class="table-secondary">
-                        <td class="align-middle px-3">
-                            <form action="{{ path('app_package_delete',{
-                                "id": package.id}
-                            ) }}" method="post">
-                                <div class="btn-group">
-                                    <a class="btn btn-primary" href="{{ path("app_package_update", {
-                                        "id": package.id}) }}">
-                                        Update
-                                    </a>
-                                    <a class="btn btn-secondary" href="{{ path("app_package_view", {
-                                        "id": package.id}) }}">
-                                        View
-                                    </a>
-                                    <button class="btn btn-danger" type="submit">Delete</button>
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for package in business.packages %}
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="{{ package.photo ? package.photo : asset('spaghetti.jpg') }}"
+                                     class="card-img-top"
+                                     alt="Default image"
+                                     style="width: 100%; height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ package.name }}</h5>
+                                    <p class="card-text">{{ package.price }} RON</p>
+                                    <form action="{{ path('app_package_delete',{
+                                        "id": package.id}
+                                    ) }}" method="post">
+                                        <div class="btn-group">
+                                            {% if is_granted('ROLE_CONSUMER') %}
+                                                {% if package.isAvailable %}
+                                                    <a class="btn btn-primary" href="{{ path("app_order_new_specific", {
+                                                        "id": app.user.consumer.id,
+                                                        "p_id" : package.id}) }}">
+                                                        Order
+                                                    </a>
+                                                {% endif %}
+                                                <a class="btn btn-secondary" href="{{ path("app_package_view", {
+                                                    "id": package.id}) }}">
+                                                    Details
+                                                </a>
+                                            {% elseif is_granted('ROLE_ADMIN') %}
+                                                <a class="btn btn-primary" href="{{ path("app_package_update", {
+                                                    "id": package.id}) }}">
+                                                    Update
+                                                </a>
+                                                <a class="btn btn-secondary" href="{{ path("app_package_view", {
+                                                    "id": package.id}) }}">
+                                                    View
+                                                </a>
+                                                <button class="btn btn-danger" type="submit">Delete</button>
+                                            {% else %}
+                                                {% if (app.user.business == package.business) %}
+                                                    <a class="btn btn-primary" href="{{ path("app_package_update", {
+                                                        "id": package.id}) }}">
+                                                        Update
+                                                    </a>
+                                                    <a class="btn btn-secondary" href="{{ path("app_package_view", {
+                                                        "id": package.id}) }}">
+                                                        View
+                                                    </a>
+                                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                                {% else %}
+                                                    <a class="btn btn-primary" href="{{ path("app_package_view", {
+                                                        "id": package.id}) }}">
+                                                        View
+                                                    </a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            {{ package.id }}
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            {{ package.name }}
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            {{ package.description }}
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            {{ package.price }}
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            {% if package.photo %}
-                                {{ package.photo }}
-                            {% else %}
-                                No photo
-                            {% endif %}
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            {{ package.createdAt|date('Y-m-d H:i:s') }}
-                        </td>
-                        <td class="text-center px-3 align-middle">
-                            <a href="{{ path('app_category_view',{
-                                'id' : package.category.id
-                            }) }}">
-                                {{ package.category.name }}
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="alert alert-warning"> No packages found</p>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
