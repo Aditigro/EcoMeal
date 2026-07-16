@@ -23,35 +23,20 @@
                                 </a>
                             {% endif %}
                         {% elseif is_granted('ROLE_ADMIN') %}
-                        <div class="btn-group">
-                            <a class="btn btn-primary" href="{{ path("app_package_update", {
-                                "id": package.id}) }}">
-                                Update
-                            </a>
-                            <a class="btn btn-secondary" href="{{ path("app_package_view", {
-                                "id": package.id}) }}">
-                                View
-                            </a>
-                            <button class="btn btn-danger" type="submit">Delete</button>
-                        </div>
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{{ path("app_package_update", {
+                                    "id": package.id}) }}">
+                                    Update
+                                </a>
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </div>
                         {% else %}
                             {% if (app.user.business == package.business) %}
-                                <div class="btn-group">
                                     <a class="btn btn-primary" href="{{ path("app_package_update", {
                                         "id": package.id}) }}">
                                         Update
                                     </a>
-                                    <a class="btn btn-secondary" href="{{ path("app_package_view", {
-                                        "id": package.id}) }}">
-                                        View
-                                    </a>
                                     <button class="btn btn-danger" type="submit">Delete</button>
-                                </div>
-                                {% else %}
-                                <a class="btn btn-primary" href="{{ path("app_package_view", {
-                                    "id": package.id}) }}">
-                                    View
-                                </a>
                             {% endif %}
                         {% endif %}
                     </div>
